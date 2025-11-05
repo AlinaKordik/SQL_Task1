@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS GenresAuthor (
 CREATE TABLE IF NOT EXISTS Album(
 	id SERIAL PRIMARY KEY,
 	name VARCHAR(60) NOT NULL,
-	released_date date
+	released_date date CHECK (1920-01-01 <= released_date)
 );
 
 
@@ -27,18 +27,23 @@ CREATE TABLE IF NOT EXISTS AuthorAlbum(
 	CONSTRAINT gk PRIMARY KEY (author_id, album_id)
 );
 
+
 CREATE TABLE IF NOT EXISTS Track(
-id INTEGER PRIMARY KEY REFERENCES Album(id),
+id SERIAL PRIMARY KEY,
 name VARCHAR(60) NOT NULL,
-duration INTEGER NOT NULL
+duration INTEGER NOT NULL CHECK (duration <= 600)
 );
 
 
 CREATE TABLE IF NOT EXISTS Collection(
 id SERIAL PRIMARY KEY,
-track_id INTEGER NOT NULL REFERENCES Track(id),
 name VARCHAR(40) NOT NULL,
-released_date date 
+released_date date CHECK (1920-01-01 <= released_date)
 );
 
+CREATE TABLE IF NOT EXISTS TrackCollection(
+	collection_id INTEGER REFERENCES Collection(id),
+	track_id INTEGER REFERENCES Track(id),
+	CONSTRAINT jj PRIMARY KEY (collection_id, track_id)
+);
 
