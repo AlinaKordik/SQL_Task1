@@ -1,53 +1,3 @@
-CREATE TABLE IF NOT EXISTS Author(
-	id SERIAL PRIMARY KEY,
-	name VARCHAR(60) NOT NULL 
-);
-
-CREATE TABLE IF NOT EXISTS Genres(
-	id SERIAL PRIMARY KEY,
-	name VARCHAR(60) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS GenresAuthor (
-	author_id INTEGER REFERENCES Author(id),
-	genre_id INTEGER REFERENCES Genres(id),
-	CONSTRAINT pk PRIMARY KEY (author_id, genre_id)
-);
-
-CREATE TABLE IF NOT EXISTS Album(
-	id SERIAL PRIMARY KEY,
-	name VARCHAR(60) NOT NULL,
-	released_date date CHECK (1920-01-01 <= released_date)
-);
-
-
-CREATE TABLE IF NOT EXISTS AuthorAlbum(
-	author_id INTEGER REFERENCES Author(id),
-	album_id INTEGER REFERENCES Album(id),
-	CONSTRAINT gk PRIMARY KEY (author_id, album_id)
-);
-
-
-CREATE TABLE IF NOT EXISTS Track(
-id SERIAL PRIMARY KEY,
-name VARCHAR(60) NOT NULL,
-duration INTEGER NOT NULL CHECK (duration <= 600),
-album_id INTEGER NOT NULL REFERENCES Album(id)
-);
-
-
-CREATE TABLE IF NOT EXISTS Collection(
-id SERIAL PRIMARY KEY,
-name VARCHAR(40) NOT NULL,
-released_date date CHECK (1920-01-01 <= released_date)
-);
-
-CREATE TABLE IF NOT EXISTS TrackCollection(
-	collection_id INTEGER REFERENCES Collection(id),
-	track_id INTEGER REFERENCES Track(id),
-	CONSTRAINT jj PRIMARY KEY (collection_id, track_id)
-);
-
 --Task 1
 
 
@@ -56,14 +6,14 @@ VALUES
 ('Bob'),
 ('Michael Jackson'),
 ('Chris Isaak'),
-('Olivia Rodrigo')
+('Olivia Rodrigo');
 
 
 INSERT INTO Genres(name) 
 VALUES 
 ('Pop'),
 ('Rock'),
-('Electro')
+('Electro');
 
 
 INSERT INTO GenresAuthor(author_id, genre_id) 
@@ -77,10 +27,10 @@ VALUES
 (3, 2),
 (4, 1),
 (4, 2),
-(4, 3)
+(4, 3);
 
 
-INSERT INTO Album(name, released_date)
+INSERT INTO album(name, released_date)
 VALUES
 ('Fridays For Future', '01.06.2020'),
 ('Live!', '01.06.1977'),
@@ -93,8 +43,8 @@ VALUES
 ('Forever Blue', '01.01.1993'),
 ('Sour', '01.01.2021'),
 ('Guts', '01.01.2023'),
-('Guts(spilled)', '01.01.2024')
-
+('Guts(spilled)', '01.01.2024'), 
+('I am a Fire', '01.01.2020');
 
 
 INSERT INTO  AuthorAlbum(author_id, album_id)
@@ -110,7 +60,8 @@ VALUES
 (3,9),
 (4,10),
 (4,11),
-(4,12)
+(4,12),
+(4,13);
 
 
 
@@ -135,7 +86,8 @@ VALUES
 ('Go Walking Down There', 170, 9),
 ('Brutal', 143, 10),
 ('All American Bitch', 165, 11),
-('Vampire', 219, 12)
+('Vampire', 219, 12),
+('I am a Fire', 222, 13);
 
 
 
@@ -144,7 +96,7 @@ VALUES
 ('Final_Word', '01.02.2018'),
 ('New_Era', '01.02.2000'),
 ('Mixing_Lifes', '01.02.2010'),
-('This_is_1/4', '01.02.2025')
+('This_is_1/4', '01.02.2025');
 
 
 INSERT INTO trackcollection(track_id, collection_id)
@@ -167,6 +119,5 @@ VALUES
 (17, 4),
 (18, 4),
 (19, 4),
-(20, 4)
-
+(20, 4);
 
